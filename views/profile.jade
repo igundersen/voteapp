@@ -1,0 +1,9 @@
+extends layout
+
+block content
+    h1 Hello #{user.twitter.displayName}
+
+    h4 Below are all your active polls
+    .list-group
+        each poll, i in docs
+            a.list-group-item.clearfix(href='/polls/#{poll._id}') #{poll.obj.pollName}

@@ -1,0 +1,20 @@
+extends layout
+
+block content
+  h1 Votes
+  p
+  if isLoggedIn === true
+    form(action='/newpoll')
+      button.btn.btn-default(type='submit')
+        span.glyphicon.glyphicon-plus
+        |  Create your own poll
+  else
+    form(action='/auth/twitter')
+      button.btn.btn-default(type='submit')
+        span.glyphicon.glyphicon-plus
+        |  Sign in with Twitter to create a poll.
+  p
+  h4 Below are all active polls
+  .list-group
+    each poll, i in docs
+      a.list-group-item(href='/polls/#{poll._id}') #{poll.obj.pollName}

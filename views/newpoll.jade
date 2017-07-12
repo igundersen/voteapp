@@ -1,0 +1,12 @@
+extends layout
+
+block content
+    h1 Make a new poll!
+    form(method="post")
+        .form-group
+            label(for='pollName') Name:
+            input#pollName.form-control(type='text', placeholder='Enter the name of the poll', name='pollName', required='')
+        .form-group
+            label(for='pollOptions') Options (seperated by line):
+            textarea#pollOptions.form-control(rows='5', name='pollOptions')
+        button.btn.btn-default(type='submit') Submit

@@ -1,0 +1,38 @@
+doctype html
+html
+  head
+    title= title
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js')
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
+    script(src='/javascripts/script.js')
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    nav.navbar.navbar-default
+      .container-fluid
+        .navbar-header
+          a.navbar-brand(href='/') VoteApp
+        ul.nav.navbar-nav
+          li.active
+            a(href='/') Home
+          if user 
+            li
+              a(href='/newpoll') New poll
+            li
+              a(href='/profile') My active polls
+        ul.nav.navbar-nav.navbar-right
+          if !user
+            li
+              a(href='/auth/twitter')
+                span.glyphicon.glyphicon-log-in
+                |  Sign in using twitter
+          if user
+            li
+              a(href='/auth/logout')
+                span.glyphicon.glyphicon-log-out
+                |  Sign out
+    .container-fluid
+      .jumbotron
+        block content

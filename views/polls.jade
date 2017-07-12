@@ -1,0 +1,40 @@
+extends layout
+
+block content
+    script(src='https://www.amcharts.com/lib/3/amcharts.js')
+    script(src='https://www.amcharts.com/lib/3/pie.js')
+    script(src='https://www.amcharts.com/lib/3/plugins/export/export.min.js')
+    link(rel='stylesheet', href='https://www.amcharts.com/lib/3/plugins/export/export.css', type='text/css', media='all')
+    script(src='https://www.amcharts.com/lib/3/themes/light.js')
+    h1 #{docs.obj.pollName}
+    .row
+        .col-sm-3 
+            p I'd like to vote for...:
+            form(method="post")
+                .form-group
+                    label(for='list') Select list (select one):
+                    select#list.form-control(name='list')
+                        each alt, i in docs.obj.pollOptions
+                            option(value='#{alt.pollAltID}') #{alt.pollAltName}
+                button.btn.btn-default(type='submit') Submit
+        .col-sm-8   
+            #chartdiv
+            if user
+                button#deleteVoteBtn.btn.btn-block.btn-danger() Remove this Poll
+
+    script.
+        var chart = AmCharts.makeChart( "chartdiv", !{JSON.stringify(pollData)} );
+
+    script.
+        $("#deleteVoteBtn").click(function(e) {
+            e.preventDefault();
+            if (window.confirm("Are you sure you want to delete this poll?")) {
+                $.ajax({
+                    "url": "http://localhost:3000/api/poll/#{docs._id}",
+                    "method": "DELETE"
+                }).done(function (response) 
+                {
+                    location.reload();
+                });
+            }
+        });
